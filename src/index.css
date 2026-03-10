@@ -1079,80 +1079,161 @@ body {
     height: 38px;
   }
 
-  /* Video Grid - PiP style on mobile */
-  .video-grid {
-    display: flex;
+  .main-content {
     position: relative;
-    flex: 1;
-    padding: 0;
-    gap: 0;
   }
 
-  /* Remote video fills the entire area */
+  .chat-area {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Video Grid - Fullscreen PiP */
+  .video-grid {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    gap: 0;
+    display: flex;
+    z-index: 1;
+  }
+
   .video-container {
     aspect-ratio: unset;
     border-radius: 0;
     border: none;
   }
 
+  /* Remote video fills the entire area */
   .video-container:last-child {
-    flex: 1;
     width: 100%;
     height: 100%;
+    flex: 1;
   }
 
-  /* Local video becomes small PiP overlay */
+  /* Local video becomes small PiP overlay at top */
   .video-container:first-child {
     position: absolute;
-    top: 12px;
+    top: 70px;
     right: 12px;
-    width: 110px;
-    height: 150px;
-    z-index: 10;
-    border-radius: var(--radius-lg);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    width: 100px;
+    height: 140px;
+    z-index: 20;
+    border-radius: var(--radius-lg) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 
-  /* Video Controls - compact */
+  /* Video Controls - floating at top */
   .video-controls {
-    padding: 8px 10px;
-    gap: 6px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 30;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+    border: none;
+    backdrop-filter: none;
+    padding: 12px 14px 30px 14px;
+    gap: 8px;
     flex-wrap: nowrap;
     justify-content: center;
     overflow-x: auto;
   }
 
+  .chat-toggle-btn {
+    display: none !important;
+  }
+
   .video-controls .btn-ghost,
   .video-controls .btn-danger {
-    padding: 6px 12px;
-    font-size: 0.75rem;
+    padding: 8px 14px;
+    font-size: 0.8rem;
     white-space: nowrap;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
   }
 
   .video-controls .btn-icon {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
   }
 
-  /* Chat Panel - full width overlay */
+  /* Chat Panel - full width overlay at bottom without toggling */
   .chat-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
     max-width: 100%;
-    top: 56px;
+    z-index: 20;
+    top: auto;
+    transform: none !important;
+    /* Always show */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 100%);
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
   .chat-panel .chat-header {
-    padding: 12px 16px;
+    display: none;
+  }
+
+  .chat-messages {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow-y: auto;
+    mask-image: linear-gradient(to top, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, black 85%, transparent 100%);
+    padding: 10px 16px 4px 16px;
+    gap: 12px;
+  }
+
+  .message-bubble {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    backdrop-filter: blur(4px);
+    max-width: 85%;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .message-bubble.sent {
+    background: var(--accent-gradient) !important;
+    align-self: flex-end;
+    border: none !important;
   }
 
   .chat-input-area {
-    padding: 10px 12px;
+    background: transparent;
+    border-top: none;
+    padding: 8px 16px 16px 16px;
   }
 
   .chat-input-area .input {
-    padding: 10px 14px;
-    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    border-radius: var(--radius-full);
+  }
+
+  .chat-input-area .input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
   }
 
   /* Landing Page */

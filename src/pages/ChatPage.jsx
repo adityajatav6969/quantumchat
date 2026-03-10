@@ -722,7 +722,7 @@ export default function ChatPage() {
 
               {mode !== 'text' && (
                 <button
-                  className="btn-icon"
+                  className="btn-icon chat-toggle-btn"
                   onClick={() => setShowChat(!showChat)}
                   title="Toggle chat"
                 >
