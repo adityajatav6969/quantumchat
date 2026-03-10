@@ -168,7 +168,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -591,38 +591,83 @@ body {
 
 /* ─── Animations ─── */
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes messageIn {
-  from { opacity: 0; transform: translateY(10px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.4); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.4);
+  }
 }
 
 @keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes reactionFloat {
-  0% { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-120px) scale(1.5); }
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.5);
+  }
 }
 
 .animate-float {
@@ -973,6 +1018,8 @@ body {
 }
 
 /* ─── Responsive ─── */
+
+/* --- Tablet (≤ 1024px) --- */
 @media (max-width: 1024px) {
   .sidebar {
     display: none;
@@ -988,6 +1035,7 @@ body {
     max-width: 360px;
     transform: translateX(100%);
     transition: transform 0.3s ease;
+    background: var(--bg-secondary);
   }
 
   .chat-panel.open {
@@ -997,27 +1045,375 @@ body {
   .video-grid {
     grid-template-columns: 1fr;
   }
+
+  .landing-hero {
+    padding: 30px 20px;
+    gap: 24px;
+  }
 }
 
-@media (max-width: 640px) {
+/* --- Mobile (≤ 768px) --- */
+@media (max-width: 768px) {
   .navbar {
-    padding: 12px 16px;
+    padding: 10px 14px;
+    height: 56px;
   }
 
+  .navbar-logo {
+    font-size: 1.1rem;
+    gap: 8px;
+  }
+
+  .navbar-logo .logo-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .navbar-actions {
+    gap: 6px;
+  }
+
+  .btn-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Video Grid - stack vertically */
   .video-grid {
+    grid-template-columns: 1fr;
     padding: 8px;
     gap: 8px;
   }
 
-  .category-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .video-container {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Video Controls - compact */
+  .video-controls {
+    padding: 10px 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .video-controls .btn-ghost,
+  .video-controls .btn-danger {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  /* Chat Panel - full width overlay */
+  .chat-panel {
+    max-width: 100%;
+    top: 56px;
+  }
+
+  .chat-panel .chat-header {
+    padding: 12px 16px;
+  }
+
+  .chat-input-area {
+    padding: 10px 12px;
+  }
+
+  .chat-input-area .input {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  /* Landing Page */
+  .landing-hero {
+    padding: 24px 16px;
+    gap: 20px;
   }
 
   .hero-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 0 8px;
   }
 
   .join-form {
-    padding: 0 16px;
+    max-width: 100%;
+    padding: 0 4px;
+  }
+
+  .join-form.glass {
+    padding: 20px !important;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .category-card {
+    padding: 12px;
+    gap: 6px;
+  }
+
+  .category-card .cat-icon {
+    font-size: 1.5rem;
+  }
+
+  .category-card .cat-name {
+    font-size: 0.75rem;
+  }
+
+  .interest-tags {
+    gap: 6px;
+  }
+
+  .interest-tag {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+
+  /* Mode Selector */
+  .mode-selector {
+    gap: 2px;
+    padding: 3px;
+  }
+
+  .mode-btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    gap: 4px;
+  }
+
+  /* Feature Cards */
+  .feature-cards-row {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  /* Rating Modal */
+  .rating-card {
+    padding: 24px 20px;
+    margin: 0 16px;
+  }
+
+  /* Icebreaker */
+  .icebreaker-card {
+    margin: 8px 12px;
+    font-size: 0.8rem;
+    padding: 10px 12px;
+  }
+
+  /* Messages */
+  .message-bubble {
+    max-width: 90%;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  /* Matching Overlay */
+  .matching-overlay {
+    gap: 16px;
+  }
+
+  .matching-overlay h2 {
+    font-size: 1.2rem !important;
+  }
+
+  .matching-spinner {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* --- Small Mobile (≤ 480px) --- */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 12px;
+    height: 50px;
+  }
+
+  .navbar-logo {
+    font-size: 1rem;
+  }
+
+  .navbar-logo .logo-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .btn-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-title {
+    font-size: 1.7rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .join-form.glass {
+    padding: 16px !important;
+  }
+
+  .join-form label {
+    font-size: 0.78rem;
+  }
+
+  .input {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    padding: 12px 20px;
+    font-size: 0.88rem;
+  }
+
+  .btn-ghost {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+
+  .btn-danger {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .category-card {
+    padding: 10px 8px;
+  }
+
+  .category-card .cat-name {
+    font-size: 0.7rem;
+  }
+
+  .video-container {
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+  }
+
+  .video-container .video-label {
+    bottom: 8px;
+    left: 8px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+  }
+
+  .video-controls {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .video-controls .btn-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .video-controls .btn-ghost,
+  .video-controls .btn-danger {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    gap: 4px;
+  }
+
+  .chat-messages {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .message-bubble {
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+
+  .chat-input-area {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  /* Emoji reaction bar in text mode */
+  .chat-input-area button[style*="font-size: 1.2rem"] {
+    font-size: 1rem !important;
+    padding: 2px !important;
+  }
+
+  /* Badge */
+  .badge {
+    font-size: 0.68rem;
+    padding: 3px 8px;
+  }
+
+  /* Star rating */
+  .star-rating button {
+    font-size: 1.6rem;
+  }
+
+  .star-rating {
+    gap: 4px;
+  }
+}
+
+/* --- Safe Area (notch / home indicator) --- */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .video-controls {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .chat-input-area {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ─── Touch Device Optimizations ─── */
+@media (hover: none) and (pointer: coarse) {
+
+  .btn-primary:hover,
+  .btn-ghost:hover,
+  .btn-danger:hover,
+  .btn-icon:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .category-card:hover {
+    transform: none;
+  }
+
+  .glass-hover:hover {
+    background: var(--bg-glass);
+    border-color: var(--border-glass);
+    box-shadow: none;
+  }
+
+  /* Larger touch targets */
+  .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .interest-tag {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .category-card {
+    min-height: 72px;
   }
 }
