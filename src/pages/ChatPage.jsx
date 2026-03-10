@@ -317,9 +317,9 @@ export default function ChatPage() {
             { urls: 'stun:stun3.l.google.com:19302' },
             { urls: 'stun:stun4.l.google.com:19302' },
             {
-              urls: ['turn:openrelay.metered.ca:80', 'turn:openrelay.metered.ca:443', 'turn:openrelay.metered.ca:443?transport=tcp'],
-              username: 'openrelayproject',
-              credential: 'openrelayproject',
+              urls: ['turn:free.expressturn.com:3478', 'turn:free.expressturn.com:3478?transport=tcp'],
+              username: '000000002088508921',
+              credential: 'iD8T2oEwuVCJ9nL+OZ2YBu0y2qU=',
             },
           ],
         },
