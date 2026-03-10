@@ -51,8 +51,7 @@ export default function LandingPage() {
 
   useEffect(() => {
     // Fetch online count
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
-    fetch(`${backendUrl}/api/online-users`)
+    fetch('/api/online-users')
       .then((r) => r.json())
       .then((d) => setOnlineCount(d.count))
       .catch(() => { });
