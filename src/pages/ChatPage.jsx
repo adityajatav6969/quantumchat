@@ -474,7 +474,7 @@ export default function ChatPage() {
             <ChevronLeft size={18} />
           </button>
           <div className="logo-icon">⚡</div>
-          <span className="glow-text">QuantumChat</span>
+          <span className="glow-text hide-name-mobile">QuantumChat</span>
         </div>
 
         <div className="navbar-actions">
@@ -483,7 +483,7 @@ export default function ChatPage() {
               <div className="avatar" style={{ width: 32, height: 32, fontSize: '0.8rem' }}>
                 {peer.nickname?.[0]?.toUpperCase()}
               </div>
-              <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>{peer.nickname}</span>
+              <span className="peer-name" style={{ fontWeight: 600, fontSize: '0.9rem' }}>{peer.nickname}</span>
               <ConnectionQuality quality={connectionQuality} />
             </div>
           )}
