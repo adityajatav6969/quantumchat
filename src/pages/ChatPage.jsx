@@ -197,19 +197,19 @@ export default function ChatPage() {
     };
   }, [mode]);
 
-  // Attach local stream to video element when it changes
+  // Attach local stream to video element when it changes or when status changes
   useEffect(() => {
     if (localVideoRef.current && localStream) {
       localVideoRef.current.srcObject = localStream;
     }
-  }, [localStream]);
+  }, [localStream, status]);
 
   // Attach remote stream to video element
   useEffect(() => {
     if (remoteVideoRef.current && remoteStream) {
       remoteVideoRef.current.srcObject = remoteStream;
     }
-  }, [remoteStream]);
+  }, [remoteStream, status]);
 
   // ─── Handlers ───
   function handleMatched(data) {
