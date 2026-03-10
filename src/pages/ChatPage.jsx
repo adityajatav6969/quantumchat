@@ -133,6 +133,7 @@ export default function ChatPage() {
   const peerRef = useRef(null);
   const messagesEndRef = useRef(null);
   const socketRef = useRef(null);
+  const localStreamRef = useRef(null);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -157,12 +158,14 @@ export default function ChatPage() {
           video: mode === 'video',
           audio: true,
         });
+        console.log('[WebRTC] Got local stream with tracks:', stream.getTracks().map(t => t.kind + ':' + t.readyState));
         setLocalStream(stream);
+        localStreamRef.current = stream;
         if (localVideoRef.current) {
           localVideoRef.current.srcObject = stream;
         }
       } catch (err) {
-        console.error('Media error:', err);
+        console.error('[WebRTC] Media error:', err);
         // Fallback to text mode
         setMode('text');
       }
@@ -196,6 +199,11 @@ export default function ChatPage() {
       socket.off('friend-accepted', handleFriendAccepted);
     };
   }, [mode]);
+
+  // Keep ref in sync with store
+  useEffect(() => {
+    localStreamRef.current = localStream;
+  }, [localStream]);
 
   // Attach local stream to video element when it changes or when status changes
   useEffect(() => {
@@ -293,19 +301,36 @@ export default function ChatPage() {
   function createPeer(rId, initiator, incomingOffer) {
     destroyPeer();
     try {
+      // Use ref to get the CURRENT stream, not the stale closure value
+      const currentStream = localStreamRef.current || useChatStore.getState().localStream;
+      console.log('[WebRTC] createPeer called:', { initiator, hasStream: !!currentStream, tracks: currentStream?.getTracks()?.map(t => t.kind) });
+
       const p = new SimplePeer({
         initiator,
         trickle: true,
-        stream: localStream || undefined,
+        stream: currentStream || undefined,
         config: {
           iceServers: [
             { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' },
+            { urls: 'stun:stun2.l.google.com:19302' },
+            {
+              urls: 'turn:openrelay.metered.ca:80',
+              username: 'openrelayproject',
+              credential: 'openrelayproject',
+            },
+            {
+              urls: 'turn:openrelay.metered.ca:443',
+              username: 'openrelayproject',
+              credential: 'openrelayproject',
+            },
           ],
         },
       });
 
       p.on('signal', (data) => {
         const socket = socketRef.current;
+        console.log('[WebRTC] Signal:', data.type || 'candidate');
         if (data.type === 'offer') {
           socket.emit('offer', { roomId: rId, offer: data });
         } else if (data.type === 'answer') {
@@ -316,15 +341,20 @@ export default function ChatPage() {
       });
 
       p.on('stream', (stream) => {
+        console.log('[WebRTC] Received remote stream with tracks:', stream.getTracks().map(t => t.kind));
         setRemoteStream(stream);
       });
 
+      p.on('connect', () => {
+        console.log('[WebRTC] Peer connection established!');
+      });
+
       p.on('error', (err) => {
-        console.error('Peer error:', err);
+        console.error('[WebRTC] Peer error:', err);
       });
 
       p.on('close', () => {
-        console.log('Peer connection closed');
+        console.log('[WebRTC] Peer connection closed');
       });
 
       if (incomingOffer) {
@@ -333,7 +363,7 @@ export default function ChatPage() {
 
       peerRef.current = p;
     } catch (err) {
-      console.error('Error creating peer:', err);
+      console.error('[WebRTC] Error creating peer:', err);
     }
   }
 
