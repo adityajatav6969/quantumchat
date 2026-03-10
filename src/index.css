@@ -1079,30 +1079,61 @@ body {
     height: 38px;
   }
 
-  /* Video Grid - stack vertically */
+  /* Video Grid - PiP style on mobile */
   .video-grid {
-    grid-template-columns: 1fr;
-    padding: 8px;
-    gap: 8px;
+    display: flex;
+    position: relative;
+    flex: 1;
+    padding: 0;
+    gap: 0;
   }
 
+  /* Remote video fills the entire area */
   .video-container {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: unset;
+    border-radius: 0;
+    border: none;
+  }
+
+  .video-container:last-child {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Local video becomes small PiP overlay */
+  .video-container:first-child {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 110px;
+    height: 150px;
+    z-index: 10;
     border-radius: var(--radius-lg);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 
   /* Video Controls - compact */
   .video-controls {
-    padding: 10px 12px;
-    gap: 8px;
-    flex-wrap: wrap;
+    padding: 8px 10px;
+    gap: 6px;
+    flex-wrap: nowrap;
     justify-content: center;
+    overflow-x: auto;
   }
 
   .video-controls .btn-ghost,
   .video-controls .btn-danger {
-    padding: 8px 14px;
-    font-size: 0.8rem;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .video-controls .btn-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
   }
 
   /* Chat Panel - full width overlay */
@@ -1303,33 +1334,36 @@ body {
     font-size: 0.7rem;
   }
 
-  .video-container {
-    aspect-ratio: 16 / 10;
-    border-radius: var(--radius-md);
+  /* PiP - even smaller on tiny screens */
+  .video-container:first-child {
+    width: 90px;
+    height: 120px;
+    top: 8px;
+    right: 8px;
   }
 
   .video-container .video-label {
-    bottom: 8px;
-    left: 8px;
-    padding: 4px 10px;
-    font-size: 0.7rem;
+    bottom: 6px;
+    left: 6px;
+    padding: 3px 8px;
+    font-size: 0.65rem;
   }
 
   .video-controls {
-    padding: 8px 10px;
-    gap: 6px;
+    padding: 6px 8px;
+    gap: 4px;
   }
 
   .video-controls .btn-icon {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
   }
 
   .video-controls .btn-ghost,
   .video-controls .btn-danger {
-    padding: 6px 10px;
-    font-size: 0.75rem;
-    gap: 4px;
+    padding: 5px 8px;
+    font-size: 0.7rem;
+    gap: 3px;
   }
 
   .chat-messages {
